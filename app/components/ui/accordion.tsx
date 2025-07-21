@@ -1,48 +1,98 @@
 'use client';
-import React, { useState, ReactNode } from 'react';
+
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
-export interface AccordionProps {
-  type?: 'single';
+type AccordionType = 'single';
+
+interface AccordionContextType {
+  openItem: string | null;
+  toggleItem: (value: string) => void;
+}
+
+const AccordionContext = createContext<AccordionContextType | null>(null);
+
+export function useAccordionContext() {
+  const ctx = useContext(AccordionContext);
+  if (!ctx) throw new Error('Must be used within <Accordion>');
+  return ctx;
+}
+
+interface AccordionProps {
+  type?: AccordionType;
   collapsible?: boolean;
   className?: string;
   children: ReactNode;
 }
 
-export function Accordion({ children, className }: AccordionProps) {
-  return <div className={clsx('w-full', className)}>{children}</div>;
+export function Accordion({
+  type = 'single',
+  collapsible = false,
+  className,
+  children,
+}: AccordionProps) {
+  const [openItem, setOpenItem] = useState<string | null>(null);
+
+  const toggleItem = (value: string) => {
+    if (openItem === value && collapsible) {
+      setOpenItem(null);
+    } else {
+      setOpenItem(value);
+    }
+  };
+
+  return (
+    <AccordionContext.Provider value={{ openItem, toggleItem }}>
+      <div className={clsx('w-full', className)}>{children}</div>
+    </AccordionContext.Provider>
+  );
 }
 
-export interface AccordionItemProps {
+interface AccordionItemProps {
   value: string;
   className?: string;
   children: ReactNode;
 }
 
 export function AccordionItem({ value, className, children }: AccordionItemProps) {
-  return <div className={clsx('overflow-hidden', className)}>{children}</div>;
+  // Clone children and inject value prop to AccordionTrigger
+  const enhancedChildren = React.Children.map(children, child => {
+    if (
+      React.isValidElement<AccordionTriggerProps>(child) &&
+      (child.type as any).displayName === 'AccordionTrigger'
+    ) {
+      return React.cloneElement(child, { value });
+    }
+    return child;
+  });
+
+  return (
+    <div className={clsx('border-b', className)}>
+      {enhancedChildren}
+    </div>
+  );
 }
 
-export interface AccordionTriggerProps {
+interface AccordionTriggerProps {
+  value: string;
   className?: string;
   children: ReactNode;
 }
 
-export function AccordionTrigger({ children, className, ...props }: AccordionTriggerProps) {
-  const [open, setOpen] = useState(false);
+export function AccordionTrigger({ value, className, children }: AccordionTriggerProps) {
+  const { openItem, toggleItem } = useAccordionContext();
+
   return (
     <button
-      className={clsx(
-        'flex items-center justify-between w-full cursor-pointer focus:outline-none',
-        className
-      )}
-      onClick={() => setOpen((o) => !o)}
+      onClick={() => toggleItem(value)}
       type="button"
-      {...props}
+      className={clsx('flex items-center justify-between w-full focus:outline-none', className)}
     >
       {children}
       <svg
-        className={clsx('ml-2 w-4 h-4 transform transition-transform', { 'rotate-180': open })}
+        className={clsx('ml-2 w-4 h-4 transform transition-transform', {
+          'rotate-180': openItem === value,
+        })}
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
@@ -54,11 +104,15 @@ export function AccordionTrigger({ children, className, ...props }: AccordionTri
   );
 }
 
-export interface AccordionContentProps {
+
+interface AccordionContentProps {
+  value: string;
   className?: string;
   children: ReactNode;
 }
 
-export function AccordionContent({ children, className }: AccordionContentProps) {
+export function AccordionContent({ value, className, children }: AccordionContentProps) {
+  const { openItem } = useAccordionContext();
+  if (openItem !== value) return null;
   return <div className={clsx('mt-2', className)}>{children}</div>;
 }

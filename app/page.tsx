@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
 import { Star, Sparkles, Stars } from "lucide-react";
-import vikramDevatha from "@/app/Assets/Vikram Devatha.avif"
+import vikramDevatha from "@/app/Assets/Vikram Devatha.jpeg"
 
 export default function Home() {
   const Hero = () => {
@@ -367,24 +367,29 @@ export default function Home() {
     const faqs = [
       {
         question: "Do I need any prior astrology knowledge?",
-        answer: "No! We guide you from the basics — whether you're a curious beginner or already familiar with Western astrology."
+        answer:
+          "No! We guide you from the basics — whether you're a curious beginner or already familiar with Western astrology.",
       },
       {
         question: "What if I can't attend all the live sessions?",
-        answer: "All sessions are recorded, and you'll have lifetime access. Go at your own pace, on your own time."
+        answer:
+          "All sessions are recorded, and you'll have lifetime access. Go at your own pace, on your own time.",
       },
       {
         question: "How are the offline retreats structured?",
-        answer: "Our retreats are optional but deeply enriching — combining temple visits, sacred rituals, and immersive group practices."
+        answer:
+          "Our retreats are optional but deeply enriching — combining temple visits, sacred rituals, and immersive group practices.",
       },
       {
         question: "Will I be able to read charts for others?",
-        answer: "Yes. By the end, you'll have the foundation to understand charts for yourself and begin practicing with others."
+        answer:
+          "Yes. By the end, you'll have the foundation to understand charts for yourself and begin practicing with others.",
       },
       {
         question: "What makes this program different?",
-        answer: "This is not just an information course. It's a spiritual initiation into Vedic wisdom — blending deep knowledge with lived experience and transformation."
-      }
+        answer:
+          "This is not just an information course. It's a spiritual initiation into Vedic wisdom — blending deep knowledge with lived experience and transformation.",
+      },
     ];
 
     return (
@@ -404,10 +409,16 @@ export default function Home() {
                 value={`item-${index}`}
                 className="bg-gray-600 backdrop-blur-sm rounded-xl border border-cosmic-lavender/50 px-6"
               >
-                <AccordionTrigger className="text-left text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6">
+                <AccordionTrigger
+                  value={`item-${index}`}
+                  className="text-left text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6"
+                >
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
+                <AccordionContent
+                  value={`item-${index}`}
+                  className="text-muted-foreground pb-6 leading-relaxed"
+                >
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -417,6 +428,7 @@ export default function Home() {
       </section>
     );
   };
+
 
   // Final CTA Component
   const FinalCTA = () => {
