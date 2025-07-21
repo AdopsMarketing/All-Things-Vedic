@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/app/components/ui/accordion";
 import { Star, Sparkles, Stars } from "lucide-react";
+import vikramDevatha from "@/app/Assets/Vikram Devatha.avif"
 
 export default function Home() {
   const Hero = () => {
@@ -124,7 +125,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Button variant="cosmicOutline" size="lg" className="bg-white/10 border-white text-white hover:bg-white hover:text-cosmic-deep backdrop-blur-sm mx-auto">
+          <Button variant="cosmicOutline" size="lg" className="bg-white/10 border-white text-white hover:bg-white hover:!text-black hover:text-cosmic-deep backdrop-blur-sm mx-auto">
             <span className="mr-2">👉</span>
             Start Now
           </Button>
@@ -211,7 +212,7 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-cosmic-gold to-cosmic-sunset rounded-3xl opacity-20 blur"></div>
               <img
-                src="/lovable-uploads/be04de39-d49c-4da7-9f3a-30b5eb58afa7.png"
+                src={vikramDevatha.src}
                 alt="Vikram Devatha - Vedic Life Coach"
                 className="relative rounded-3xl shadow-2xl w-full max-w-md mx-auto"
               />
@@ -224,7 +225,7 @@ export default function Home() {
                 education, business, data science, and the timeless wisdom of the Vedas.
               </p>
 
-              <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-cosmic-lavender/30">
+              <div className="bg-gray-600 backdrop-blur-sm rounded-2xl p-6 border border-cosmic-lavender/30">
                 <p className="text-muted-foreground leading-relaxed">
                   With a <span className="font-semibold text-cosmic-deep">PhD in Vedic Astrology</span> from Shree Maharshi College
                   of Vedic Astrology and a <span className="font-semibold text-cosmic-deep">gold medal in Data Science</span> from
@@ -339,7 +340,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-white text-cosmic-deep hover:bg-cosmic-gold hover:text-white border-white text-lg px-8 py-6 h-auto"
+              className="bg-white hover:bg-black text-black hover:text-white  text-cosmic-deep hover:bg-cosmic-gold border-white text-lg px-8 py-6 h-auto"
             >
               <span className="mr-3">👉</span>
               Join the 52-Week Journey Today
@@ -349,7 +350,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-transparent text-white border-white hover:bg-white hover:text-cosmic-deep text-lg px-8 py-6 h-auto backdrop-blur-sm"
+              className="bg-transparent text-white border-white hover:bg-white hover:!text-black hover:text-cosmic-deep text-lg px-8 py-6 h-auto backdrop-blur-sm"
             >
               <span className="mr-3">✨</span>
               Or attend a Free Info Session
@@ -401,7 +402,7 @@ export default function Home() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-white/70 backdrop-blur-sm rounded-xl border border-cosmic-lavender/50 px-6"
+                className="bg-gray-600 backdrop-blur-sm rounded-xl border border-cosmic-lavender/50 px-6"
               >
                 <AccordionTrigger className="text-left text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6">
                   {faq.question}
@@ -449,7 +450,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-white text-cosmic-deep hover:bg-cosmic-deep hover:text-white border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"
+              className="bg-white hover:bg-black text-black hover:text-white text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"
             >
               <span className="mr-3">👉</span>
               Join the 52-Week Vedic Astrology Journey
@@ -459,7 +460,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-transparent text-white border-white hover:bg-white hover:text-cosmic-sunset text-xl px-10 py-8 h-auto backdrop-blur-sm shadow-xl"
+              className="bg-transparent text-white hover:!text-black border-white hover:bg-white hover:text-cosmic-sunset text-xl px-10 py-8 h-auto backdrop-blur-sm shadow-xl"
             >
               <span className="mr-3">✨</span>
               Or reserve your spot at our next Free Info Session
