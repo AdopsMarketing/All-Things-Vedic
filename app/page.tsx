@@ -14,6 +14,8 @@ import Logo from "@/app/Assets/logo.png";
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import { useSearchParams, redirect } from 'next/navigation';
+
 
 export default function Home() {
   const Hero = () => {
@@ -23,8 +25,18 @@ export default function Home() {
     const [intention, setIntention] = useState("");
     const [contribute, setContribute] = useState("");
 
-    const ghlApiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6InRkNjg2WVNkS0FsVGd6RTFhZEx2IiwidmVyc2lvbiI6MSwiaWF0IjoxNzUyMDY1NzYwNjcwLCJzdWIiOiJHYVh2OWduMmtZZWFrVTJQSjJUUCJ9.wQNI6knz2gBIw62AM1oyzBvWPZQWSicx4HzfROYRQ7A';
-    const locationId = 'td686YSdKAlTgzE1adLv';
+
+    const searchParams = useSearchParams();
+    const utmSource = searchParams.get('utm_source');
+    const utmMedium = searchParams.get('utm_medium');
+    const utmCampaign = searchParams.get('utm_campaign');
+    const utmContent = searchParams.get('utm_content');
+    const utmTerm = searchParams.get('utm_term');
+    const formName = "Intermediate Vedic Astrology"
+
+
+    const ghlApiKey = process.env.NEXT_PUBLIC_GHL_API_KEY;
+    const locationId = process.env.NEXT_PUBLIC_LOCATION_ID;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -33,9 +45,16 @@ export default function Home() {
         firstName,
         phone,
         email,
+        locationId,
         customField: [
           { id: "fiOzpg6xUl7yyzg4lElv", value: contribute },
           { id: "iKM5QdSljhjiK9KoZZjW", value: intention },
+          { id: "UyiGeJrMqGO0PYYGnNYv", value: formName },
+          { id: "CJhE66CUrGN8gJnvQBXz", value: utmCampaign },
+          { id: "5Bh4fW9zm6lS9We56bnz", value: utmSource },
+          { id: "qMytAIk17N8kjcQzzXUs", value: utmTerm },
+          { id: "OyBLd3HqI5M7nl87cnNN", value: utmMedium },
+          { id: "w7DjJU9HZ5ambtmcGAKi", value: utmContent },
         ]
       };
 
@@ -50,6 +69,12 @@ export default function Home() {
             }
           }
         );
+
+        console.log('Form submitted successfully:', response);
+
+        if (response.status === 200) {
+          window.location.href = "/thankyou";
+        }
         setFirstName("");
         setPhone("");
         setEmail("");
@@ -134,8 +159,10 @@ export default function Home() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     required
+                    maxLength={13}
                   />
                 </label>
+
 
                 <label htmlFor="email" className="flex flex-col gap-1">
                   Email
@@ -183,7 +210,7 @@ export default function Home() {
                 </label>
                 <button
                   type="submit"
-                  className="mt-6 bg-white/70  text-cosmic-deep hover:bg-cosmic-sunset text-lg px-6 py-3 rounded-lg shadow-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cosmic-gold/50 focus:ring-offset-2"
+                  className="mt-5 bg-white/70  text-cosmic-deep hover:bg-cosmic-sunset text-lg px-6 py-3 rounded-lg shadow-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cosmic-gold/50 focus:ring-offset-2"
                 >Submit</button>
               </form>
             </Card>
@@ -208,7 +235,7 @@ export default function Home() {
 
           <div className="prose prose-lg max-w-none text-center">
             <p className="text-xl text-foreground mb-8 leading-relaxed">
-              Vedic astrology, or <span className="font-semibold text-cosmic-royal">Jyotish Shastra</span>,
+              Vedic astrology, or <span className="font-normal text-cosmic-royal">Jyotish Shastra</span>,
               is one of the oldest and most profound systems of cosmic wisdom. Unlike Western astrology,
               which focuses on personality, Vedic astrology reveals the deeper karmic patterns shaping
               your life — past, present, and future.
@@ -323,7 +350,7 @@ export default function Home() {
           </div>
 
           <div className="text-center">
-            <p className="text-xl font-semibold text-cosmic-royal bg-cosmic-lavender/50 inline-block px-8 py-4 rounded-full">
+            <p className="text-xl font-normal text-cosmic-royal bg-cosmic-lavender/50 inline-block px-8 py-4 rounded-full">
               This is for anyone ready to walk the path, not just learn the theory.
             </p>
           </div>
@@ -356,14 +383,14 @@ export default function Home() {
             <div className="space-y-6">
               <p className="text-lg text-foreground leading-relaxed">
                 I am <span className="font-bold text-cosmic-royal">Vikram Devatha</span>, a Vedic Life Coach with over
-                <span className="font-semibold text-cosmic-deep"> 25 years of experience</span> weaving together astrology,
+                <span className="font-normal text-cosmic-deep"> 25 years of experience</span> weaving together astrology,
                 education, business, data science, and the timeless wisdom of the Vedas.
               </p>
 
               <div className="bg-gray-600 backdrop-blur-sm rounded-2xl p-6 border border-cosmic-lavender/30">
                 <p className="text-muted-foreground leading-relaxed text-white">
-                  With a <span className="font-semibold text-cosmic-deep ">PhD in Vedic Astrology</span> from Shree Maharshi College
-                  of Vedic Astrology and a <span className="font-semibold text-cosmic-deep">gold medal in Data Science</span> from
+                  With a <span className="font-normal text-cosmic-deep ">PhD in Vedic Astrology</span> from Shree Maharshi College
+                  of Vedic Astrology and a <span className="font-normal text-cosmic-deep">gold medal in Data Science</span> from
                   the Indian School of Business, my journey bridges the ancient and the modern.
                 </p>
               </div>
@@ -386,7 +413,7 @@ export default function Home() {
               </p>
 
               <div className="text-center lg:text-left">
-                <p className="text-xl font-semibold text-cosmic-deep italic">
+                <p className="text-xl font-normal text-cosmic-deep italic">
                   I invite you to step into this world of cosmic wisdom — to not just understand your destiny,
                   but to actively shape it.
                 </p>
@@ -433,7 +460,7 @@ export default function Home() {
 
           <div className="text-center">
             <div className="bg-gradient-to-r from-cosmic-lavender to-cosmic-mint p-8 rounded-3xl">
-              <p className="text-xl font-semibold text-cosmic-deep">
+              <p className="text-xl font-normal text-cosmic-deep">
                 You'll walk away not only with knowledge, but with tools to transform your life.
               </p>
             </div>
@@ -549,7 +576,7 @@ export default function Home() {
               >
                 <AccordionTrigger
                   value={`item-${index}`}
-                  className="text-left text-white text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6"
+                  className="text-left text-white text-lg font-normal text-cosmic-deep hover:text-cosmic-royal py-6"
                 >
                   {faq.question}
                 </AccordionTrigger>
