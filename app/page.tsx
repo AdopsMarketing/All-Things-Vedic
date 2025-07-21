@@ -29,7 +29,7 @@ export default function Home() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="mb-8">
-            <h1 className="text-5xl text-white md:text-7xl font-bold bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep bg-clip-text text-transparent mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep bg-clip-text mb-6 leading-tight">
               Awaken Your Soul's Journey
             </h1>
             <h2 className="text-2xl md:text-3xl font-light text-cosmic-deep mb-8">
@@ -42,7 +42,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="cosmic" size="lg" className="group">
+            <Button variant="cosmic" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
               <span className="mr-2">👉</span>
               Join the Journey
               <div className="ml-2 transition-transform group-hover:scale-110">
@@ -50,7 +50,7 @@ export default function Home() {
               </div>
             </Button>
 
-            <Button variant="cosmicOutline" size="lg" className="group">
+            <Button variant="cosmic" size="lg" className="group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
               <span className="mr-2">✨</span>
               Attend a Free Info Session
               <Star className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
@@ -117,7 +117,7 @@ export default function Home() {
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
           <div className="mb-8">
             <Stars className="h-12 w-12 text-cosmic-gold mx-auto mb-6 animate-pulse" />
-            <blockquote className="text-3xl md:text-4xl font-light text-white mb-6 italic leading-relaxed">
+            <blockquote className="text-3xl md:text-4xl font-light mb-6 italic leading-relaxed">
               "You are not just under the stars. You are made of them."
             </blockquote>
             <p className="text-xl text-white/80">
@@ -125,7 +125,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Button variant="cosmicOutline" size="lg" className="bg-white/10 border-white text-white hover:bg-white hover:!text-black hover:text-cosmic-deep backdrop-blur-sm mx-auto">
+          <Button variant="cosmicOutline" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]  hover:text-cosmic-deep backdrop-blur-sm mx-auto">
             <span className="mr-2">👉</span>
             Start Now
           </Button>
@@ -226,8 +226,8 @@ export default function Home() {
               </p>
 
               <div className="bg-gray-600 backdrop-blur-sm rounded-2xl p-6 border border-cosmic-lavender/30">
-                <p className="text-muted-foreground leading-relaxed">
-                  With a <span className="font-semibold text-cosmic-deep">PhD in Vedic Astrology</span> from Shree Maharshi College
+                <p className="text-muted-foreground leading-relaxed text-white">
+                  With a <span className="font-semibold text-cosmic-deep ">PhD in Vedic Astrology</span> from Shree Maharshi College
                   of Vedic Astrology and a <span className="font-semibold text-cosmic-deep">gold medal in Data Science</span> from
                   the Indian School of Business, my journey bridges the ancient and the modern.
                 </p>
@@ -340,8 +340,8 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-white hover:bg-black text-black hover:text-white  text-cosmic-deep hover:bg-cosmic-gold border-white text-lg px-8 py-6 h-auto"
-            >
+              className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
+
               <span className="mr-3">👉</span>
               Join the 52-Week Journey Today
               <Sparkles className="ml-3 h-5 w-5" />
@@ -350,8 +350,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-transparent text-white border-white hover:bg-white hover:!text-black hover:text-cosmic-deep text-lg px-8 py-6 h-auto backdrop-blur-sm"
-            >
+              className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
               <span className="mr-3">✨</span>
               Or attend a Free Info Session
               <Star className="ml-3 h-5 w-5" />
@@ -411,13 +410,13 @@ export default function Home() {
               >
                 <AccordionTrigger
                   value={`item-${index}`}
-                  className="text-left text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6"
+                  className="text-left text-white text-lg font-semibold text-cosmic-deep hover:text-cosmic-royal py-6"
                 >
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent
                   value={`item-${index}`}
-                  className="text-muted-foreground pb-6 leading-relaxed"
+                  className="text-muted-foreground pb-6 leading-relaxed text-white"
                 >
                   {faq.answer}
                 </AccordionContent>
@@ -451,10 +450,10 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl font-bold text-white mb-8 drop-shadow-lg">
+          <h2 className="text-5xl md:text-7xl font-bold mb-8 drop-shadow-lg">
             The stars are calling.
           </h2>
-          <p className="text-3xl md:text-4xl text-white/95 mb-12 font-light drop-shadow">
+          <p className="text-3xl md:text-4xl text-gray-600 mb-12 font-light drop-shadow">
             Will you answer?
           </p>
 
@@ -462,7 +461,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-white hover:bg-black text-black hover:text-white text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"
+              className="bg-white hover:bg-black  text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"
             >
               <span className="mr-3">👉</span>
               Join the 52-Week Vedic Astrology Journey
@@ -472,8 +471,7 @@ export default function Home() {
             <Button
               variant="cosmicOutline"
               size="lg"
-              className="bg-transparent text-white hover:!text-black border-white hover:bg-white hover:text-cosmic-sunset text-xl px-10 py-8 h-auto backdrop-blur-sm shadow-xl"
-            >
+              className="bg-white hover:bg-black  text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"            >
               <span className="mr-3">✨</span>
               Or reserve your spot at our next Free Info Session
               <Star className="ml-3 h-6 w-6" />
