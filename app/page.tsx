@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent } from "@/app/components/ui/card";
 import {
@@ -8,15 +10,62 @@ import {
 } from "@/app/components/ui/accordion";
 import { Star, Sparkles, Stars } from "lucide-react";
 import vikramDevatha from "@/app/Assets/Vikram Devatha.jpeg"
+import Logo from "@/app/Assets/logo.png";
+import { useState } from "react";
+import axios from "axios";
+import Image from "next/image";
 
 export default function Home() {
   const Hero = () => {
+    const [firstName, setFirstName] = useState("")
+    const [phone, setPhone] = useState("");
+    const [email, setEmail] = useState("");
+    const [intention, setIntention] = useState("");
+    const [contribute, setContribute] = useState("");
+
+    const ghlApiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2NhdGlvbl9pZCI6InRkNjg2WVNkS0FsVGd6RTFhZEx2IiwidmVyc2lvbiI6MSwiaWF0IjoxNzUyMDY1NzYwNjcwLCJzdWIiOiJHYVh2OWduMmtZZWFrVTJQSjJUUCJ9.wQNI6knz2gBIw62AM1oyzBvWPZQWSicx4HzfROYRQ7A';
+    const locationId = 'td686YSdKAlTgzE1adLv';
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      const data = {
+        firstName,
+        phone,
+        email,
+        customField: [
+          { id: "fiOzpg6xUl7yyzg4lElv", value: contribute },
+          { id: "iKM5QdSljhjiK9KoZZjW", value: intention },
+        ]
+      };
+
+      try {
+        const response = await axios.post(
+          `https://rest.gohighlevel.com/v1/contacts/`,
+          data,
+          {
+            headers: {
+              'Authorization': `Bearer ${ghlApiKey}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+        setFirstName("");
+        setPhone("");
+        setEmail("");
+        setIntention("");
+        setContribute("");
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    };
+
+
+
     return (
-      <section className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
-        {/* Cosmic background elements */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center bg-background overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-cosmic-lavender/30 via-background to-cosmic-mint/20"></div>
 
-        {/* Floating stars */}
         <div className="absolute top-20 left-20 animate-pulse">
           <Star className="h-4 w-4 text-cosmic-gold" />
         </div>
@@ -27,46 +76,130 @@ export default function Home() {
           <Star className="h-3 w-3 text-cosmic-sunset" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep bg-clip-text mb-6 leading-tight">
-              Awaken Your Soul's Journey
-            </h1>
-            <h2 className="text-2xl md:text-3xl font-light text-cosmic-deep mb-8">
-              Through Vedic Astrology
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              A 52-week online and retreat-based program to help you decode your karmic path,
-              align with cosmic rhythms, and step into your highest purpose.
-            </p>
+        <div className="container flex flex-col md:flex-row items-center justify-between gap-12 py-20">
+          <div className="relative col z-10 max-w-4xl mx-auto px-6 text-center">
+            <div className="mb-8">
+              <Image src={Logo} alt="All Things Vedic Logo" className="h-16 w-auto mx-auto mb-4" />
+              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep bg-clip-text mb-6 leading-tight">
+                Awaken Your Soul's Journey
+              </h1>
+              <h2 className="text-2xl md:text-3xl font-light text-cosmic-deep mb-8">
+                Through Vedic Astrology
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                A 52-week online and retreat-based program to help you decode your karmic path,
+                align with cosmic rhythms, and step into your highest purpose.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button variant="cosmic" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
+                <span className="mr-2">👉</span>
+                Join the Journey
+                <div className="ml-2 transition-transform group-hover:scale-110">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+              </Button>
+
+              <Button variant="cosmic" size="lg" className="group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
+                <span className="mr-2">✨</span>
+                Attend a Free Info Session
+                <Star className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
+              </Button>
+            </div>
+
+          </div>
+          <div className="col">
+            <Card className="bg-white/10 backdrop-blur-lg shadow-2xl rounded-2xl border-0">
+              <form className="relative flex flex-col gap-5 max-w-md mx-auto p-8 bg-transparent rounded-2xl"
+                onSubmit={handleSubmit}>
+                <label htmlFor="fullName" className="flex flex-col gap-3">
+                  Full Name
+                  <input
+                    type="text"
+                    id="fullName"
+                    required
+                    className="shadow-lg bg-white/30 backdrop-blur-md rounded px-4 py-2 border border-white/30 focus:outline-none"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </label>
+
+                <label htmlFor="phoneNumber" className="flex flex-col gap-1">
+                  Cell number (with country code)
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    className="shadow-lg bg-white/30 backdrop-blur-md rounded px-4 py-2 border border-white/30 focus:outline-none"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
+                </label>
+
+                <label htmlFor="email" className="flex flex-col gap-1">
+                  Email
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    className="shadow-lg bg-white/30 backdrop-blur-md rounded px-4 py-2 border border-white/30 focus:outline-none"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </label>
+
+                <label htmlFor="intention" className="flex flex-col gap-1">
+                  Please share the deeper intention behind your decision to join this program. This will help me tailor the year to suit your needs
+                  <textarea
+                    rows={4}
+                    required
+                    id="intention"
+                    className="shadow-lg bg-white/30 backdrop-blur-md rounded px-4 py-2 border border-white/30 focus:outline-none"
+                    value={intention}
+                    onChange={(e) => setIntention(e.target.value)}
+                  ></textarea>
+                </label>
+
+                <label htmlFor="support" className="flex flex-col gap-1">
+                  How much can you contribute?
+                  <select
+                    id="support"
+                    name="support"
+                    className="shadow-lg bg-white/30 backdrop-blur-md rounded px-4 py-2 border border-white/30 focus:outline-none"
+                    value={contribute}
+                    onChange={(e) => setContribute(e.target.value)}
+                    style={{ whiteSpace: 'wrap', textOverflow: 'ellipsis' }}
+                  >
+                    <option value="" disabled>
+                      Select your contribution
+                    </option>
+                    <option value="0">₹0 - I need full support at this time. I will contribute later.</option>
+                    <option value="5000">₹1 to ₹5,000 - I am in between jobs / low income.</option>
+                    <option value="20000">₹5,001 to ₹20,000 - I have moderate means.</option>
+                    <option value="50000">₹20,001 to ₹50,000 - I am comfortable and wish to pay the sustaining fee.</option>
+                    <option value="100000">₹50,001 to ₹1,00,000+ - I am able to support this work and others who need help.</option>
+                  </select>
+                </label>
+                <button
+                  type="submit"
+                  className="mt-6 bg-white/70  text-cosmic-deep hover:bg-cosmic-sunset text-lg px-6 py-3 rounded-lg shadow-lg transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-cosmic-gold/50 focus:ring-offset-2"
+                >Submit</button>
+              </form>
+            </Card>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button variant="cosmic" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
-              <span className="mr-2">👉</span>
-              Join the Journey
-              <div className="ml-2 transition-transform group-hover:scale-110">
-                <Sparkles className="h-5 w-5" />
-              </div>
-            </Button>
-
-            <Button variant="cosmic" size="lg" className="group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
-              <span className="mr-2">✨</span>
-              Attend a Free Info Session
-              <Star className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
-            </Button>
-          </div>
         </div>
-      </section>
+      </section >
     );
   };
 
   // Intro Section Component
   const IntroSection = () => {
     return (
-      <section className="py-20 px-6 bg-background">
+      <section className="py-10 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center ">
             <h2 className="text-4xl md:text-5xl font-bold text-cosmic-deep mb-8">
               Why Vedic Astrology?
             </h2>
@@ -110,7 +243,7 @@ export default function Home() {
   // Inspirational Banner Component
   const InspirationalBanner = () => {
     return (
-      <section className="py-20 bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep relative overflow-hidden">
+      <section className="py-10 bg-gradient-to-r from-cosmic-deep via-cosmic-royal to-cosmic-deep relative overflow-hidden">
         {/* Cosmic overlay */}
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-30"></div>
 
@@ -125,10 +258,12 @@ export default function Home() {
             </p>
           </div>
 
-          <Button variant="cosmicOutline" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]  hover:text-cosmic-deep backdrop-blur-sm mx-auto">
-            <span className="mr-2">👉</span>
-            Start Now
-          </Button>
+          <a href="#hero">
+            <Button variant="cosmicOutline" size="lg" className="!text-[var(--foreground)] border-black hover:bg-[var(--foreground)] hover:!text-[var(--background)]  hover:text-cosmic-deep backdrop-blur-sm mx-auto">
+              <span className="mr-2">👉</span>
+              Start Now
+            </Button>
+          </a>
         </div>
       </section>
     );
@@ -158,7 +293,7 @@ export default function Home() {
     ];
 
     return (
-      <section className="py-20 px-6 bg-background">
+      <section className="py-10 px-6 bg-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-cosmic-deep mb-8">
@@ -200,9 +335,9 @@ export default function Home() {
   // About Section Component
   const AboutSection = () => {
     return (
-      <section className="py-20 px-6 bg-gradient-to-br from-cosmic-lavender/30 via-background to-cosmic-mint/30">
+      <section className="py-10 px-6 bg-gradient-to-br from-cosmic-lavender/30 via-background to-cosmic-mint/30">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-5">
             <h2 className="text-4xl md:text-5xl font-bold text-cosmic-deep mb-8">
               <span className="text-2xl">🌸</span> About Vikram Devatha
             </h2>
@@ -274,16 +409,16 @@ export default function Home() {
     ];
 
     return (
-      <section className="py-20 px-6 bg-background">
+      <section className="py-10 px-6 bg-background">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-5">
             <h2 className="text-4xl md:text-5xl font-bold text-cosmic-deep mb-8">
               What You'll Experience
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-cosmic-royal to-cosmic-gold mx-auto"></div>
           </div>
 
-          <div className="space-y-6 mb-12">
+          <div className="space-y-6 mb-5">
             {experiences.map((experience, index) => (
               <div key={index} className="flex items-start space-x-4 group">
                 <div className="flex-shrink-0 mt-1">
@@ -311,7 +446,7 @@ export default function Home() {
   // Call to Action Component
   const CallToAction = () => {
     return (
-      <section className="py-20 px-6 bg-gradient-to-br from-cosmic-deep via-cosmic-royal to-cosmic-deep relative overflow-hidden">
+      <section className="py-10 px-6 bg-gradient-to-br from-cosmic-deep via-cosmic-royal to-cosmic-deep relative overflow-hidden">
         {/* Cosmic background pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-10 left-10 animate-pulse">
@@ -337,24 +472,28 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button
-              variant="cosmicOutline"
-              size="lg"
-              className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
+            <a href="#hero">
+              <Button
+                variant="cosmicOutline"
+                size="lg"
+                className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
 
-              <span className="mr-3">👉</span>
-              Join the 52-Week Journey Today
-              <Sparkles className="ml-3 h-5 w-5" />
-            </Button>
+                <span className="mr-3">👉</span>
+                Join the 52-Week Journey Today
+                <Sparkles className="ml-3 h-5 w-5" />
+              </Button>
+            </a>
 
-            <Button
-              variant="cosmicOutline"
-              size="lg"
-              className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
-              <span className="mr-3">✨</span>
-              Or attend a Free Info Session
-              <Star className="ml-3 h-5 w-5" />
-            </Button>
+            <a href="#hero">
+              <Button
+                variant="cosmicOutline"
+                size="lg"
+                className="text-cosmic-deep hover:bg-cosmic-gold text-lg px-8 py-6 h-auto group !text-[var(--foreground)] !border-[var(--foreground)] hover:bg-[var(--foreground)] hover:!text-[var(--background)]">
+                <span className="mr-3">✨</span>
+                Or attend a Free Info Session
+                <Star className="ml-3 h-5 w-5" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -392,9 +531,9 @@ export default function Home() {
     ];
 
     return (
-      <section className="py-20 px-6 bg-cosmic-lavender/30">
+      <section className="py-10 px-6 bg-cosmic-lavender/30">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-5">
             <h2 className="text-4xl md:text-5xl font-bold text-cosmic-deep mb-8">
               Frequently Asked Questions
             </h2>
@@ -432,7 +571,7 @@ export default function Home() {
   // Final CTA Component
   const FinalCTA = () => {
     return (
-      <section className="py-20 px-6 bg-gradient-to-r from-cosmic-sunset via-cosmic-gold to-cosmic-sunset relative overflow-hidden">
+      <section className="py-10 px-6 bg-gradient-to-r from-cosmic-sunset via-cosmic-gold to-cosmic-sunset relative overflow-hidden">
         {/* Starfield effect */}
         <div className="absolute inset-0">
           <div className="absolute top-20 left-1/4 animate-pulse delay-200">
@@ -458,24 +597,27 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button
-              variant="cosmicOutline"
-              size="lg"
-              className="bg-white hover:bg-black  text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"
-            >
-              <span className="mr-3">👉</span>
-              Join the 52-Week Vedic Astrology Journey
-              <Sparkles className="ml-3 h-6 w-6" />
-            </Button>
+            <a href="#hero">
+              <Button
+                variant="cosmicOutline"
+                size="lg"
+                className="bg-white hover:bg-black text-black  border-white text-xl px-10 py-8 hover:scale-105 transform-all transition duration-300">
+                <span className="mr-3">👉</span>
+                Join the 52-Week Vedic Astrology Journey
+                <Sparkles className="ml-3 h-6 w-6" />
+              </Button>
+            </a>
 
-            <Button
-              variant="cosmicOutline"
-              size="lg"
-              className="bg-white hover:bg-black  text-cosmic-deep hover:bg-cosmic-deep border-white text-xl px-10 py-8 h-auto shadow-2xl hover:shadow-cosmic transition-all duration-300 hover:scale-105"            >
-              <span className="mr-3">✨</span>
-              Or reserve your spot at our next Free Info Session
-              <Star className="ml-3 h-6 w-6" />
-            </Button>
+            <a href="#hero">
+              <Button
+                variant="cosmicOutline"
+                size="lg"
+                className="bg-white hover:bg-black text-black border-white text-xl px-10 py-8 hover:scale-105 transform-all transition duration-300">
+                <span className="mr-3">✨</span>
+                Or reserve your spot at our next Free Info Session
+                <Star className="ml-3 h-6 w-6" />
+              </Button>
+            </a>
           </div>
         </div>
       </section>

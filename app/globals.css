@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url("./Assets/Fonts/brandon-grotesque/Brandon_Grotesque_light.otf")
+    format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url("./Assets/Fonts/brandon-grotesque/Brandon_Grotesque_regular.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717 !important;
+  --background: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -10,16 +26,54 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --brandon-grotesque: url("./") format("woff2");
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Brandon Grotesque", sans-serif;
+  font-weight: 300;
 }
 
 h1,
-h2 {
-  color: var(--foreground);
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Brandon Grotesque", sans-serif;
+  font-weight: 300;
 }
+
+option {
+  padding: 10px;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 16px;
+  border: none;
+}
+
+option:hover {
+  background-color: #171717;
+  color: #333;
+}
+
+select:focus {
+  outline: none;
+  border-color: #171717;
+}
+
+option:disabled {
+  color: #999;
+  background-color: #f5f5f5;
+}
+
