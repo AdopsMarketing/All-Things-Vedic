@@ -16,6 +16,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url("./Assets/Fonts/brandon-grotesque/Brandon_Grotesque_medium.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
 :root {
   --background: #171717;
   --foreground: #ffffff;
