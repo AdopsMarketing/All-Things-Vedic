@@ -41,6 +41,11 @@ export default function Home() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
+      if (!firstName || !phone || !email || !intention || !contribute) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
       const data = {
         firstName,
         phone,
