@@ -39,12 +39,7 @@ export default function Home() {
     const locationId = process.env.NEXT_PUBLIC_LOCATION_ID;
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      if (!firstName || !phone || !email || !intention || !contribute) {
-        alert("Please fill in all fields.");
-        return;
-      }
+      e.preventDefault()
 
       const data = {
         firstName,
@@ -198,6 +193,7 @@ export default function Home() {
                     value={contribute}
                     onChange={(e) => setContribute(e.target.value)}
                     style={{ whiteSpace: 'wrap', textOverflow: 'ellipsis' }}
+                    required
                   >
                     <option value="" disabled>
                       Select your contribution
